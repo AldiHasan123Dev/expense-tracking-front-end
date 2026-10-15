@@ -1,0 +1,1207 @@
+/* =========================================================
+   Personal Expense Tracker — App.css
+   Satu layar per menu aktif, tanpa grid dashboard gabungan.
+   Cocok dengan App.tsx yang menggunakan:
+   <main className={`dashboard page-${activePage}`}>
+   ========================================================= */
+
+:root {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #172033;
+  background: #f4f7fb;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  --primary: #4f46e5;
+  --primary-dark: #4338ca;
+  --text: #172033;
+  --muted: #687386;
+  --border: #e5eaf1;
+  --surface: #fff;
+  --page: #f4f7fb;
+  --income: #15966a;
+  --expense: #dc4c64;
+  --shadow: 0 5px 20px rgb(15 23 42 / 5%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-width: 320px;
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  min-height: 100vh;
+  background: var(--page);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid rgb(79 70 229 / 20%);
+  outline-offset: 2px;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* Halaman utama: tinggi mengikuti isi, bukan dipaksa ke grid 4 baris. */
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: min(1600px, 100%);
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin-inline: auto;
+  padding: 18px clamp(12px, 2vw, 30px);
+  background: var(--page);
+}
+
+.dashboard > * {
+  min-width: 0;
+}
+
+/* ================= NAVBAR ================= */
+
+.dashboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex: 0 0 auto;
+  min-height: 70px;
+  padding: 12px 20px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex: 0 0 auto;
+  color: inherit;
+  text-decoration: none;
+}
+
+.brand-icon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #6366f1, #4338ca);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.brand-text strong {
+  color: var(--text);
+  font-size: 17px;
+  letter-spacing: -0.4px;
+}
+
+.brand-text small {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.main-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 auto;
+  gap: 5px;
+  min-width: 0;
+}
+
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 9px 13px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 650;
+  white-space: nowrap;
+  transition: color 150ms ease, background 150ms ease;
+}
+
+.nav-link > span {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.nav-link:hover {
+  background: #f1f2ff;
+  color: var(--primary);
+}
+
+.nav-link.active {
+  border-color: #e1e2ff;
+  background: #eeeeff;
+  color: var(--primary-dark);
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 0 0 auto;
+  gap: 12px;
+}
+
+.navbar-date {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--muted);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.date-icon {
+  font-size: 15px;
+}
+
+.profile-avatar {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid #e1e2ff;
+  border-radius: 50%;
+  background: #eeeeff;
+  color: var(--primary-dark);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+/* Error tidak menimpa isi halaman. */
+.dashboard-error {
+  flex: 0 0 auto;
+  padding: 12px 15px;
+  border: 1px solid #fecaca;
+  border-radius: 11px;
+  background: #fff1f2;
+  color: #b4233a;
+  font-size: 13px;
+}
+
+/* ================= DASHBOARD ================= */
+
+/* Dashboard saja menampilkan ringkasan, anggaran, dan grafik. */
+.page-dashboard .dashboard-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.summary-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 155px;
+  padding: 18px 20px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.card-top {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.summary-icon {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 11px;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.income-icon {
+  background: #e4f8ef;
+  color: var(--income);
+}
+
+.expense-icon {
+  background: #fff0f1;
+  color: var(--expense);
+}
+
+.balance-icon {
+  background: #eeeeff;
+  color: var(--primary);
+  font-size: 11px;
+}
+
+.card-label {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+}
+
+.card-badge,
+.balance-decoration {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  margin-left: auto;
+  place-items: center;
+  border-radius: 50%;
+  background: #f4f6fa;
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.summary-title {
+  margin: 15px 0 5px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.summary-card h2 {
+  margin: 0;
+  overflow-wrap: anywhere;
+  color: var(--text);
+  font-size: clamp(20px, 2vw, 27px);
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.income-card h2 {
+  color: var(--income);
+}
+
+.expense-card h2 {
+  color: var(--expense);
+}
+
+.card-footer {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: auto;
+  padding-top: 12px;
+  color: #8791a1;
+  font-size: 11px;
+}
+
+.card-indicator {
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.income-card .card-indicator {
+  color: var(--income);
+}
+
+.expense-card .card-indicator {
+  color: var(--expense);
+}
+
+.balance-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--primary);
+}
+
+/* Pada dashboard, anggaran dan grafik tampil berdampingan.
+   Tinggi halaman tetap mengikuti konten; panel tidak dipaksa overflow. */
+.page-dashboard .dashboard-lower-content {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 18px;
+}
+
+.page-dashboard .dashboard-budget,
+.page-dashboard .dashboard-chart {
+  min-width: 0;
+}
+
+/* ================= PANEL UMUM ================= */
+
+.dashboard-budget,
+.dashboard-chart,
+.dashboard-form,
+.dashboard-transactions,
+.dashboard-savings-content {
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.panel {
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+/* ================= HALAMAN ANGGARAN ================= */
+
+.page-budget .dashboard-budget {
+  width: 100%;
+  max-width: 1180px;
+  margin-inline: auto;
+  padding: clamp(18px, 3vw, 30px);
+}
+
+/* ================= HALAMAN TRANSAKSI ================= */
+
+.page-transactions .dashboard-form,
+.page-transactions .dashboard-transactions {
+  width: 100%;
+}
+
+.page-transactions .dashboard-form {
+  padding: 20px;
+}
+
+.page-transactions .dashboard-transactions {
+  padding: 20px;
+}
+
+/* Form dan daftar transaksi bersebelahan di layar lebar,
+   lalu ditumpuk di layar kecil. */
+.page-transactions {
+  align-items: stretch;
+}
+
+.page-transactions .dashboard-form,
+.page-transactions .dashboard-transactions {
+  align-self: start;
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  margin-bottom: 20px;
+}
+
+.section-heading > div:last-child {
+  min-width: 0;
+}
+
+.heading-icon {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 11px;
+  background: #eeeeff;
+  color: var(--primary);
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.list-icon {
+  font-size: 17px;
+}
+
+.section-heading h2 {
+  margin: 0;
+  color: var(--text);
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.section-heading p {
+  margin: 5px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.list-heading {
+  flex-wrap: wrap;
+}
+
+.transaction-count {
+  margin-left: auto;
+  padding: 7px 10px;
+  border: 1px solid #e7e8ff;
+  border-radius: 8px;
+  background: #f5f5ff;
+  color: var(--primary-dark);
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* Filter tetap rapi dan bisa turun baris sesuai lebar konten. */
+.transaction-filters {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+  margin-bottom: 16px;
+}
+
+.search-box {
+  position: relative;
+  grid-column: 1 / -1;
+  min-width: 0;
+}
+
+.transaction-filters input,
+.transaction-filters select,
+.dashboard-form input,
+.dashboard-form select,
+.dashboard-form textarea,
+.edit-modal input,
+.edit-modal select,
+.edit-modal textarea {
+  width: 100%;
+  min-width: 0;
+  min-height: 41px;
+  padding: 10px 12px;
+  border: 1px solid #dfe4ec;
+  border-radius: 9px;
+  background: #fff;
+  color: var(--text);
+  font-size: 12px;
+}
+
+.transaction-filters input::placeholder,
+.dashboard-form input::placeholder,
+.dashboard-form textarea::placeholder {
+  color: #9aa3b2;
+}
+
+.search-box .search-icon {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  z-index: 1;
+  color: #8b95a5;
+  font-size: 20px;
+  line-height: 1;
+  transform: translateY(-55%);
+  pointer-events: none;
+}
+
+.search-box input {
+  padding-left: 36px;
+}
+
+.reset-filter-button,
+.pagination-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 39px;
+  padding: 9px 12px;
+  border: 1px solid #e0e3ff;
+  border-radius: 9px;
+  background: #f5f5ff;
+  color: var(--primary-dark);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.reset-filter-button:hover,
+.pagination-button:not(:disabled):hover {
+  background: #e9e9ff;
+}
+
+.transaction-filters .reset-filter-button {
+  white-space: nowrap;
+}
+
+.transaction-list {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  min-width: 0;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 190px;
+  padding: 24px 16px;
+  border: 1px dashed #dfe4ec;
+  border-radius: 12px;
+  background: #fbfcff;
+  text-align: center;
+}
+
+.empty-state > span {
+  margin-bottom: 9px;
+  font-size: 28px;
+}
+
+.empty-state h3 {
+  margin: 0;
+  color: var(--text);
+  font-size: 15px;
+}
+
+.empty-state p {
+  max-width: 360px;
+  margin: 8px 0 14px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 18px;
+  padding-top: 12px;
+  border-top: 1px solid #eef1f5;
+  background: var(--surface);
+}
+
+.pagination-info {
+  color: var(--muted);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+/* Form transaksi: kompatibel dengan label/input di komponen form. */
+.dashboard-form form,
+.edit-modal form {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.dashboard-form form label,
+.edit-modal form label {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  color: #465166;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.dashboard-form textarea,
+.edit-modal textarea {
+  min-height: 85px;
+  resize: vertical;
+}
+
+.dashboard-form button[type="submit"],
+.edit-modal button[type="submit"] {
+  min-height: 42px;
+  padding: 11px 15px;
+  border: 0;
+  border-radius: 9px;
+  background: var(--primary);
+  color: white;
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.dashboard-form button[type="submit"]:hover,
+.edit-modal button[type="submit"]:hover {
+  background: var(--primary-dark);
+}
+
+/* ================= TARGET TABUNGAN ================= */
+
+.page-savings .dashboard-savings-content {
+  width: 100%;
+  max-width: 1250px;
+  margin-inline: auto;
+}
+
+/* ================= MODAL EDIT ================= */
+
+.edit-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow-y: auto;
+  background: rgb(15 23 42 / 55%);
+  backdrop-filter: blur(4px);
+}
+
+.edit-modal {
+  width: min(560px, 100%);
+  max-height: calc(100dvh - 40px);
+  padding: 23px;
+  overflow-y: auto;
+  border: 1px solid rgb(255 255 255 / 60%);
+  border-radius: 17px;
+  background: #fff;
+  box-shadow: 0 24px 80px rgb(15 23 42 / 25%);
+}
+
+.edit-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.edit-modal-header h2 {
+  margin: 0;
+  color: var(--text);
+  font-size: 20px;
+}
+
+.edit-modal-header p {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.close-modal-button {
+  display: grid;
+  width: 35px;
+  height: 35px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: #fff;
+  color: #667085;
+  font-size: 23px;
+  line-height: 1;
+}
+
+.close-modal-button:hover {
+  background: #f5f6fa;
+}
+
+/* Footer selalu berada setelah konten, bukan di area grid khusus. */
+.app-footer {
+  padding: 2px 0 4px;
+  color: #8b95a5;
+  font-size: 11px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 1050px) {
+  .dashboard-header {
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 13px 16px;
+  }
+
+  .main-navbar {
+    order: 3;
+    flex-basis: 100%;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 2px;
+  }
+
+  .navbar-right {
+    margin-left: auto;
+  }
+
+  .page-dashboard .dashboard-lower-content {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .page-transactions .dashboard-form,
+  .page-transactions .dashboard-transactions {
+    padding: 18px;
+  }
+}
+
+@media (max-width: 650px) {
+  .dashboard {
+    gap: 12px;
+    padding: 10px;
+  }
+
+  .dashboard-header {
+    gap: 10px;
+    padding: 12px;
+    border-radius: 13px;
+  }
+
+  .brand-icon {
+    width: 37px;
+    height: 37px;
+  }
+
+  .brand-text strong {
+    font-size: 15px;
+  }
+
+  .navbar-date {
+    display: none;
+  }
+
+  .main-navbar {
+    gap: 4px;
+  }
+
+  .nav-link {
+    min-height: 36px;
+    gap: 5px;
+    padding: 8px 9px;
+    font-size: 11px;
+  }
+
+  .nav-link > span {
+    font-size: 13px;
+  }
+
+  .page-dashboard .dashboard-summary {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .summary-card {
+    min-height: 130px;
+    padding: 16px;
+  }
+
+  .dashboard-budget,
+  .dashboard-chart,
+  .dashboard-form,
+  .dashboard-transactions,
+  .dashboard-savings-content {
+    padding: 14px;
+    border-radius: 13px;
+  }
+
+  .section-heading {
+    align-items: flex-start;
+    gap: 9px;
+  }
+
+  .section-heading h2 {
+    font-size: 15px;
+  }
+
+  .transaction-count {
+    width: 100%;
+    margin-left: 49px;
+  }
+
+  .transaction-filters {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .search-box {
+    grid-column: auto;
+  }
+
+  .pagination {
+    gap: 8px;
+  }
+
+  .pagination-button {
+    flex: 1 1 105px;
+  }
+
+  .edit-modal-overlay {
+    align-items: flex-start;
+    padding: 10px;
+  }
+
+  .edit-modal {
+    margin-block: auto;
+    padding: 17px;
+    border-radius: 13px;
+  }
+}
+
+
+/* ===== LAYOUT SIDEBAR ===== */
+
+.dashboard {
+  display: block;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 24px;
+  padding-left: 284px;
+  background: #f4f7fb;
+}
+
+/* Sidebar kiri */
+.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  width: 260px;
+  padding: 28px 18px 18px;
+  background: #fff;
+  border-right: 1px solid #e5eaf1;
+  box-shadow: 4px 0 20px rgb(15 23 42 / 3%);
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 8px 30px;
+  color: #172033;
+  text-decoration: none;
+}
+
+.sidebar-brand .brand-icon {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  place-items: center;
+  border-radius: 12px;
+  background: #4f46e5;
+  color: white;
+  font-weight: 800;
+}
+
+.sidebar-brand .brand-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sidebar-brand .brand-text strong {
+  font-size: 18px;
+}
+
+.sidebar-brand .brand-text small {
+  color: #687386;
+  font-size: 12px;
+}
+
+.sidebar-label {
+  padding: 0 10px;
+  margin: 0 0 12px;
+  color: #929bad;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  width: 100%;
+  padding: 13px 14px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: #687386;
+  text-align: left;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background 0.2s, color 0.2s;
+}
+
+.sidebar-link:hover {
+  background: #f3f4ff;
+  color: #4f46e5;
+}
+
+.sidebar-link.active {
+  background: #4f46e5;
+  color: #fff;
+  box-shadow: 0 5px 12px rgb(79 70 229 / 20%);
+}
+
+.sidebar-icon {
+  display: inline-grid;
+  width: 22px;
+  place-items: center;
+  font-size: 19px;
+}
+
+.sidebar-footer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: auto;
+  padding: 18px 8px 4px;
+  border-top: 1px solid #e5eaf1;
+}
+
+.profile-avatar {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  place-items: center;
+  border-radius: 50%;
+  background: #e9e7ff;
+  color: #4f46e5;
+  font-weight: 800;
+}
+
+.sidebar-profile {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.sidebar-profile strong {
+  font-size: 12px;
+  color: #172033;
+}
+
+.sidebar-profile small {
+  font-size: 11px;
+  color: #687386;
+}
+
+/* Header konten kanan */
+.content-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding: 8px 0 20px;
+  border-bottom: 1px solid #e5eaf1;
+}
+
+.content-header h1 {
+  margin: 0 0 6px;
+  color: #172033;
+  font-size: 26px;
+  font-weight: 750;
+}
+
+.content-header p {
+  margin: 0;
+  color: #687386;
+  font-size: 14px;
+}
+
+.content-header .navbar-date {
+  color: #687386;
+  font-size: 13px;
+}
+
+/* Hilangkan jarak berlebihan dari layout sebelumnya */
+.dashboard > .sidebar {
+  margin: 0;
+}
+
+.dashboard > .content-header,
+.dashboard > .error-message,
+.dashboard > .summary-grid,
+.dashboard > .dashboard-chart-content,
+.dashboard > .dashboard-budget-content,
+.dashboard > .dashboard-transaction-content,
+.dashboard > .dashboard-savings-content,
+.dashboard > .app-footer {
+  min-width: 0;
+}
+
+/* Tampilan tablet dan ponsel */
+@media (max-width: 760px) {
+  .dashboard {
+    padding: 16px;
+    padding-top: 210px;
+  }
+
+  .sidebar {
+    right: 0;
+    bottom: auto;
+    width: 100%;
+    height: auto;
+    padding: 12px 14px;
+    border-right: 0;
+    border-bottom: 1px solid #e5eaf1;
+  }
+
+  .sidebar-brand {
+    padding: 0 4px 12px;
+  }
+
+  .sidebar-label,
+  .sidebar-footer {
+    display: none;
+  }
+
+  .sidebar-nav {
+    flex-direction: row;
+    gap: 6px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+
+  .sidebar-link {
+    flex: 0 0 auto;
+    width: auto;
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+
+  .sidebar-icon {
+    width: auto;
+    font-size: 16px;
+  }
+
+  .content-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .content-header h1 {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 420px) {
+  .dashboard {
+    padding: 12px;
+    padding-top: 205px;
+  }
+
+  .sidebar-link {
+    gap: 7px;
+    padding: 9px;
+  }
+
+  .content-header .navbar-date {
+    font-size: 12px;
+  }
+}
+.chart-filter-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.chart-filter-header h2 {
+  margin: 0 0 6px;
+  font-size: 18px;
+  color: #172033;
+}
+
+.chart-filter-header p {
+  margin: 0;
+  color: #687386;
+  font-size: 13px;
+}
+
+.chart-filter-header button {
+  padding: 9px 12px;
+  border: 1px solid #e1e5ee;
+  border-radius: 8px;
+  background: #fff;
+  color: #4f46e5;
+  cursor: pointer;
+}
+
+.chart-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.chart-filters select,
+.chart-filters input {
+  min-width: 150px;
+  padding: 10px 12px;
+  border: 1px solid #e1e5ee;
+  border-radius: 8px;
+  background: #fff;
+  color: #344054;
+  font: inherit;
+}
+
+@media (max-width: 600px) {
+  .chart-filter-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .chart-filters {
+    flex-direction: column;
+  }
+
+  .chart-filters select,
+  .chart-filters input {
+    width: 100%;
+  }
+}

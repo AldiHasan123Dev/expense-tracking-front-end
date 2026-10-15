@@ -1,0 +1,1593 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
+:root {
+  font-family: "Inter", sans-serif;
+  color: #172554;
+  background: #f4f7fc;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at top left, #e7edff 0%, transparent 40%),
+    #f4f7fc;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button,
+select {
+  cursor: pointer;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid #a5b4fc;
+  outline-offset: 2px;
+}
+
+/* =========================
+   CONTAINER UTAMA
+========================= */
+
+.app-container {
+  width: min(1180px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: 36px 0 24px;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.app-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 28px 32px;
+  margin-bottom: 28px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid #edf0fa;
+  border-radius: 22px;
+  box-shadow: 0 8px 30px rgba(36, 54, 100, 0.04);
+}
+
+.brand-icon,
+.heading-icon {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  color: white;
+  background: linear-gradient(135deg, #60a5fa, #635bfa);
+}
+
+.brand-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 19px;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.header-content {
+  flex: 1;
+}
+
+.header-content h1 {
+  margin: 0 0 7px;
+  color: #142447;
+  font-size: clamp(22px, 3vw, 32px);
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+.header-content p {
+  margin: 0;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.header-date {
+  padding: 11px 15px;
+  color: #42577d;
+  background: #f0f4ff;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* =========================
+   KARTU RINGKASAN KEUANGAN
+========================= */
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.summary-card {
+  display: flex;
+  align-items: center;
+  gap: 17px;
+  min-width: 0;
+  padding: 26px 22px;
+  background: white;
+  border: 1px solid;
+  border-radius: 20px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.summary-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 26px rgba(36, 54, 100, 0.07);
+}
+
+.income-card {
+  background: linear-gradient(135deg, #f0fdf7, #ffffff);
+  border-color: #d1fae5;
+}
+
+.expense-card {
+  background: linear-gradient(135deg, #fff4f5, #ffffff);
+  border-color: #ffe0e4;
+}
+
+.balance-card {
+  background: linear-gradient(135deg, #eff6ff, #ffffff);
+  border-color: #dbeafe;
+}
+
+.summary-icon {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  color: #2563eb;
+  background: #dbeafe;
+  border-radius: 50%;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.income-card .summary-icon {
+  color: #059669;
+  background: #d1fae5;
+}
+
+.expense-card .summary-icon {
+  color: #e11d48;
+  background: #ffe0e4;
+}
+
+.summary-card p {
+  margin: 0 0 9px;
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.summary-card h2 {
+  margin: 0;
+  color: #172554;
+  font-size: clamp(16px, 1.8vw, 24px);
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.income-card h2 {
+  color: #047857;
+}
+
+.expense-card h2 {
+  color: #e11d48;
+}
+
+.balance-card h2 {
+  color: #1d4ed8;
+}
+
+/* =========================
+   PANEL DAN JUDUL BAGIAN
+========================= */
+
+.panel {
+  padding: 30px;
+  margin-bottom: 26px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid #edf0fa;
+  border-radius: 22px;
+  box-shadow: 0 8px 30px rgba(36, 54, 100, 0.04);
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 26px;
+}
+
+.heading-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 15px;
+  font-size: 30px;
+  font-weight: 400;
+  box-shadow: 0 5px 12px rgba(99, 91, 250, 0.15);
+}
+
+.section-heading h2 {
+  margin: 0 0 6px;
+  color: #172554;
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.section-heading p {
+  margin: 0;
+  color: #7b8ba7;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* =========================
+   FORM TRANSAKSI
+========================= */
+
+.transaction-form {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  min-width: 0;
+}
+
+.form-field label {
+  color: #253653;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.form-field input,
+.form-field select {
+  width: 100%;
+  min-width: 0;
+  height: 49px;
+  padding: 0 14px;
+  color: #263653;
+  background: #ffffff;
+  border: 1px solid #dce4f1;
+  border-radius: 11px;
+  outline: none;
+  font-size: 13px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-field input::placeholder {
+  color: #9aa8bd;
+}
+
+.form-field input:focus,
+.form-field select:focus {
+  border-color: #818cf8;
+  box-shadow: 0 0 0 4px rgba(99, 91, 250, 0.09);
+}
+
+.form-field .type-select.income {
+  color: #047857;
+  background-color: #f0fdf7;
+  border-color: #bbf7d0;
+}
+
+.form-field .type-select.expense {
+  color: #be123c;
+  background-color: #fff5f6;
+  border-color: #fecdd3;
+}
+
+.submit-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: end;
+  gap: 10px;
+  min-height: 49px;
+  padding: 12px 18px;
+  color: #ffffff;
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  border: none;
+  border-radius: 11px;
+  box-shadow: 0 6px 14px rgba(79, 70, 229, 0.2);
+  font-size: 13px;
+  font-weight: 700;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.submit-button span {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.submit-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 9px 20px rgba(79, 70, 229, 0.28);
+}
+
+.submit-button:active {
+  transform: translateY(0);
+}
+
+/* =========================
+   DAFTAR TRANSAKSI
+========================= */
+
+.list-heading {
+  margin-bottom: 24px;
+}
+
+.list-icon {
+  color: #5b5ce2;
+  background: #eef0ff;
+  box-shadow: none;
+}
+
+.transaction-count {
+  margin-left: auto;
+  padding: 8px 12px;
+  color: #5145cd;
+  background: #f0efff;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.transaction-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.transaction-item {
+  display: grid;
+  grid-template-columns: 54px minmax(0, 1.5fr) minmax(95px, 0.8fr) minmax(130px, 1fr);
+  align-items: center;
+  gap: 17px;
+  padding: 19px;
+  border: 1px solid;
+  border-radius: 15px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.transaction-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(36, 54, 100, 0.06);
+}
+
+.transaction-income {
+  background: linear-gradient(110deg, #f0fdf7, #ffffff);
+  border-color: #d5f5e7;
+}
+
+.transaction-expense {
+  background: linear-gradient(110deg, #fff5f6, #ffffff);
+  border-color: #ffe1e6;
+}
+
+.transaction-icon {
+  display: grid;
+  place-items: center;
+  width: 50px;
+  height: 50px;
+  color: #059669;
+  background: #d1fae5;
+  border-radius: 50%;
+  font-size: 27px;
+  font-weight: 700;
+}
+
+.transaction-expense .transaction-icon {
+  color: #e11d48;
+  background: #ffe0e4;
+}
+
+.transaction-details {
+  min-width: 0;
+}
+
+.transaction-details h3 {
+  margin: 0 0 9px;
+  color: #1e293b;
+  font-size: 15px;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.transaction-category,
+.transaction-date {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 6px 0 0;
+  color: #70809b;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.transaction-category span,
+.transaction-date span {
+  color: #7c8bab;
+  font-size: 16px;
+}
+
+.transaction-badge {
+  justify-self: start;
+  padding: 7px 11px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.badge-income {
+  color: #047857;
+  background: #d1fae5;
+}
+
+.badge-expense {
+  color: #be123c;
+  background: #ffe0e4;
+}
+
+.transaction-amount {
+  justify-self: end;
+  min-width: 0;
+  text-align: right;
+}
+
+.transaction-amount strong {
+  font-size: 16px;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.transaction-income .transaction-amount {
+  color: #047857;
+}
+
+.transaction-expense .transaction-amount {
+  color: #e11d48;
+}
+
+/* =========================
+   KONDISI DATA KOSONG
+========================= */
+
+.empty-state {
+  padding: 42px 20px;
+  color: #64748b;
+  text-align: center;
+  background: #f8faff;
+  border: 1px dashed #d8e0f0;
+  border-radius: 15px;
+}
+
+.empty-state>span {
+  font-size: 34px;
+}
+
+.empty-state h3 {
+  margin: 12px 0 8px;
+  color: #253653;
+  font-size: 16px;
+}
+
+.empty-state p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.app-footer {
+  padding: 4px 0 12px;
+  color: #94a3b8;
+  font-size: 12px;
+  text-align: center;
+}
+
+/* =========================
+   RESPONSIVE TABLET
+========================= */
+
+@media (max-width: 900px) {
+  .summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .balance-card {
+    grid-column: 1 / -1;
+  }
+
+  .transaction-form {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .transaction-item {
+    grid-template-columns: 48px minmax(0, 1fr) auto;
+    gap: 13px;
+  }
+
+  .transaction-icon {
+    width: 46px;
+    height: 46px;
+  }
+
+  .transaction-badge {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .transaction-amount {
+    grid-column: 3;
+    grid-row: 1 / 3;
+  }
+}
+
+/* =========================
+   RESPONSIVE MOBILE
+========================= */
+
+@media (max-width: 600px) {
+  .app-container {
+    width: calc(100% - 24px);
+    padding-top: 16px;
+  }
+
+  .app-header {
+    flex-wrap: wrap;
+    gap: 14px;
+    padding: 20px;
+    border-radius: 17px;
+  }
+
+  .brand-icon {
+    width: 49px;
+    height: 49px;
+    border-radius: 14px;
+    font-size: 18px;
+  }
+
+  .header-content {
+    flex-basis: calc(100% - 70px);
+  }
+
+  .header-content h1 {
+    font-size: 21px;
+    letter-spacing: -0.6px;
+  }
+
+  .header-content p {
+    font-size: 12px;
+  }
+
+  .header-date {
+    margin-left: 63px;
+    padding: 8px 11px;
+    font-size: 11px;
+  }
+
+  .summary-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+
+  .balance-card {
+    grid-column: auto;
+  }
+
+  .summary-card {
+    padding: 19px;
+  }
+
+  .summary-card h2 {
+    font-size: 21px;
+  }
+
+  .panel {
+    padding: 20px 16px;
+    margin-bottom: 18px;
+    border-radius: 17px;
+  }
+
+  .section-heading {
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 22px;
+  }
+
+  .heading-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+  }
+
+  .section-heading h2 {
+    font-size: 17px;
+  }
+
+  .section-heading p {
+    font-size: 12px;
+  }
+
+  .transaction-form {
+    grid-template-columns: 1fr;
+    gap: 17px;
+  }
+
+  .submit-button {
+    width: 100%;
+    margin-top: 3px;
+  }
+
+  .list-heading {
+    flex-wrap: wrap;
+  }
+
+  .transaction-count {
+    margin-left: auto;
+  }
+
+  .transaction-item {
+    grid-template-columns: 40px minmax(0, 1fr);
+    gap: 12px;
+    padding: 15px 12px;
+  }
+
+  .transaction-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 22px;
+  }
+
+  .transaction-details h3 {
+    font-size: 14px;
+  }
+
+  .transaction-badge {
+    grid-column: 2;
+    grid-row: auto;
+    margin-top: 2px;
+  }
+
+  .transaction-amount {
+    grid-column: 2;
+    grid-row: auto;
+    justify-self: start;
+    text-align: left;
+    margin-top: 2px;
+  }
+
+  .transaction-amount strong {
+    font-size: 15px;
+  }
+}
+
+.transaction-form {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px 22px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.form-field label {
+  color: #263653;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1px;
+}
+
+.form-field input,
+.form-field select {
+  width: 100%;
+  height: 50px;
+  padding: 0 15px;
+  color: #243451;
+  background: #fbfcff;
+  border: 1px solid #dfe6f1;
+  border-radius: 12px;
+  outline: none;
+  font-family: inherit;
+  font-size: 13px;
+  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-field input::placeholder {
+  color: #a0acc0;
+}
+
+.form-field input:hover,
+.form-field select:hover {
+  border-color: #c4cce0;
+}
+
+.form-field input:focus,
+.form-field select:focus {
+  background: #ffffff;
+  border-color: #818cf8;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+}
+
+/* Input nominal dengan prefix Rp */
+.amount-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.amount-input-wrapper .currency-prefix {
+  position: absolute;
+  left: 15px;
+  z-index: 1;
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 700;
+  pointer-events: none;
+}
+
+.amount-input-wrapper input {
+  padding-left: 43px;
+}
+
+/* Warna tipe transaksi */
+.form-field select.type-select {
+  font-weight: 600;
+}
+
+.form-field select.type-select.income {
+  color: #047857;
+  background-color: #f0fdf7;
+  border-color: #bbf7d0;
+}
+
+.form-field select.type-select.expense {
+  color: #be123c;
+  background-color: #fff5f6;
+  border-color: #fecdd3;
+}
+
+/* Tombol simpan */
+.form-action {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 10px;
+  min-width: 0;
+}
+
+.submit-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 50px;
+  padding: 12px 18px;
+  color: #ffffff;
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(79, 70, 229, 0.2);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.button-plus {
+  display: inline-grid;
+  place-items: center;
+  width: 23px;
+  height: 23px;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 7px;
+  font-size: 21px;
+  line-height: 1;
+}
+
+.submit-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(79, 70, 229, 0.28);
+  filter: brightness(1.04);
+}
+
+.submit-button:active {
+  transform: translateY(0);
+}
+
+.form-hint {
+  margin: 0;
+  color: #94a3b8;
+  font-size: 11px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+  .transaction-form {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px 18px;
+  }
+
+  .form-action {
+    align-self: end;
+  }
+}
+
+/* HP */
+@media (max-width: 600px) {
+  .transaction-form {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+  }
+
+  .form-field input,
+  .form-field select {
+    height: 48px;
+  }
+
+  .form-action {
+    margin-top: 2px;
+  }
+
+  .submit-button {
+    min-height: 49px;
+  }
+}
+
+.transaction-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.transaction-item {
+  display: grid;
+  grid-template-columns: 54px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 18px;
+  padding: 20px 22px;
+  background: #ffffff;
+  border: 1px solid #e8edf5;
+  border-radius: 16px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.transaction-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 9px 24px rgba(36, 54, 100, 0.07);
+}
+
+.transaction-income {
+  border-left: 4px solid #10b981;
+}
+
+.transaction-expense {
+  border-left: 4px solid #f43f5e;
+}
+
+/* Ikon transaksi */
+.transaction-icon {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  font-size: 27px;
+  font-weight: 700;
+}
+
+.transaction-income .transaction-icon {
+  color: #059669;
+  background: #d1fae5;
+}
+
+.transaction-expense .transaction-icon {
+  color: #e11d48;
+  background: #ffe4e8;
+}
+
+/* Detail transaksi */
+.transaction-details {
+  min-width: 0;
+}
+
+.transaction-details h3 {
+  margin: 0 0 10px;
+  color: #172554;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.transaction-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+}
+
+.transaction-category,
+.transaction-date {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0;
+  color: #71819b;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.meta-icon {
+  color: #8998b0;
+  font-size: 15px;
+}
+
+/* Badge dan nominal */
+.transaction-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  min-width: 0;
+}
+
+.transaction-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 11px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.badge-income {
+  color: #047857;
+  background: #d1fae5;
+}
+
+.badge-expense {
+  color: #be123c;
+  background: #ffe4e8;
+}
+
+.transaction-amount {
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.5;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.transaction-income .transaction-amount {
+  color: #059669;
+}
+
+.transaction-expense .transaction-amount {
+  color: #e11d48;
+}
+
+/* Tampilan tablet */
+@media (max-width: 768px) {
+  .transaction-item {
+    grid-template-columns: 48px minmax(0, 1fr) auto;
+    gap: 13px;
+    padding: 17px;
+  }
+
+  .transaction-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+    font-size: 24px;
+  }
+
+  .transaction-amount {
+    font-size: 14px;
+  }
+}
+
+/* Tampilan HP */
+@media (max-width: 480px) {
+  .transaction-item {
+    grid-template-columns: 42px minmax(0, 1fr);
+    gap: 12px;
+    padding: 15px 12px;
+    border-radius: 13px;
+  }
+
+  .transaction-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    font-size: 22px;
+  }
+
+  .transaction-details h3 {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  .transaction-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .transaction-info {
+    grid-column: 2;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .transaction-amount {
+    text-align: left;
+    font-size: 15px;
+  }
+}
+
+.transaction-filters {
+  display: grid;
+  grid-template-columns: minmax(200px, 1fr) 160px 180px auto;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.search-box {
+  position: relative;
+  min-width: 0;
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  left: 14px;
+  color: #8492aa;
+  font-size: 23px;
+  transform: translateY(-55%);
+  pointer-events: none;
+}
+
+.search-box input,
+.transaction-filters select {
+  width: 100%;
+  height: 44px;
+  padding: 0 13px;
+  color: #263653;
+  background: #fbfcff;
+  border: 1px solid #dfe6f1;
+  border-radius: 11px;
+  outline: none;
+  font-family: inherit;
+  font-size: 12px;
+}
+
+.search-box input {
+  padding-left: 42px;
+}
+
+.search-box input:focus,
+.transaction-filters select:focus {
+  background: #fff;
+  border-color: #818cf8;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.09);
+}
+
+.reset-filter-button {
+  min-height: 44px;
+  padding: 0 16px;
+  color: #4f46e5;
+  background: #eef2ff;
+  border: 1px solid #e0e7ff;
+  border-radius: 11px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.reset-filter-button:hover {
+  background: #e0e7ff;
+}
+
+@media (max-width: 900px) {
+  .transaction-filters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .search-box {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 600px) {
+  .transaction-filters {
+    grid-template-columns: 1fr;
+  }
+
+  .search-box {
+    grid-column: auto;
+  }
+
+  .transaction-filters select,
+  .reset-filter-button {
+    width: 100%;
+    min-height: 46px;
+  }
+}
+
+
+.transaction-actions {
+  display: flex !important;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.edit-transaction-button,
+.delete-transaction-button {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.edit-transaction-button {
+  color: #4338ca;
+  background: #eef2ff;
+  border: 1px solid #c7d2fe;
+}
+
+.delete-transaction-button {
+  color: #dc2626;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+}
+
+.transaction-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+@media (max-width: 600px) {
+  .transaction-info {
+    align-items: flex-start;
+  }
+}
+
+/* Overlay gelap di belakang modal */
+.edit-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.58);
+  backdrop-filter: blur(4px);
+  overflow-y: auto;
+}
+
+/* Kotak modal */
+.edit-modal {
+  width: 100%;
+  max-width: 560px;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  padding: 28px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.22);
+  animation: edit-modal-appear 0.2s ease-out;
+}
+
+/* Header modal */
+.edit-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.edit-modal-header h2 {
+  margin: 0 0 6px;
+  color: #172554;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.edit-modal-header p {
+  margin: 0;
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.close-modal-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  color: #475569;
+  background: #f1f5f9;
+  border: none;
+  border-radius: 10px;
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.close-modal-button:hover {
+  color: #dc2626;
+  background: #fee2e2;
+}
+
+/* Form di dalam modal */
+.edit-modal .transaction-form {
+  display: grid;
+  gap: 16px;
+}
+
+/* Animasi popup */
+@keyframes edit-modal-appear {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Tampilan HP */
+@media (max-width: 600px) {
+  .edit-modal-overlay {
+    align-items: center;
+    padding: 12px;
+  }
+
+  .edit-modal {
+    max-height: calc(100vh - 24px);
+    padding: 20px;
+    border-radius: 16px;
+  }
+
+  .edit-modal-header h2 {
+    font-size: 19px;
+  }
+}
+
+/* Container tombol pada form modal */
+.edit-modal .form-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+/* Tombol Batal */
+.edit-modal .cancel-edit-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 22px;
+  color: #475569;
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.edit-modal .cancel-edit-button:hover {
+  color: #1e293b;
+  background: #e2e8f0;
+  border-color: #94a3b8;
+}
+
+.edit-modal .cancel-edit-button:active {
+  transform: scale(0.97);
+}
+
+.edit-modal .cancel-edit-button:focus-visible {
+  outline: 3px solid rgba(99, 102, 241, 0.3);
+  outline-offset: 2px;
+}
+
+/* Tombol Simpan Perubahan */
+.edit-modal .submit-transaction-button {
+  min-height: 44px;
+  padding: 0 22px;
+  color: #ffffff;
+  background: #4f46e5;
+  border: 1px solid #4f46e5;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.edit-modal .submit-transaction-button:hover {
+  background: #4338ca;
+  border-color: #4338ca;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+}
+
+.edit-modal .submit-transaction-button:active {
+  transform: scale(0.97);
+}
+
+.edit-modal .submit-transaction-button:focus-visible {
+  outline: 3px solid rgba(99, 102, 241, 0.3);
+  outline-offset: 2px;
+}
+
+/* Responsif untuk layar HP */
+@media (max-width: 480px) {
+  .edit-modal .form-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .edit-modal .cancel-edit-button,
+  .edit-modal .submit-transaction-button {
+    width: 100%;
+    min-height: 46px;
+  }
+}
+
+
+/* =========================
+   FINANCE CHARTS
+========================= */
+
+.finance-chart-panel {
+  margin-bottom: 24px;
+}
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  margin-top: 24px;
+}
+
+.chart-card {
+  min-width: 0;
+  padding: 20px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+}
+
+.chart-card h3 {
+  margin: 0 0 6px;
+  color: #1e293b;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.chart-description {
+  margin: 0;
+  color: #64748b;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.chart-container {
+  width: 100%;
+  height: 280px;
+  margin-top: 18px;
+}
+
+.pie-chart-container {
+  height: 250px;
+}
+
+.chart-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+  margin: 0;
+  color: #94a3b8;
+  font-size: 13px;
+  text-align: center;
+}
+
+.category-breakdown {
+  display: grid;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.category-breakdown-item,
+.category-color {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.category-color {
+  justify-content: flex-start;
+  color: #475569;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.category-breakdown-item strong {
+  color: #1e293b;
+  font-size: 12px;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.category-color-dot {
+  flex-shrink: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+@media (max-width: 900px) {
+  .charts-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .chart-card {
+    padding: 14px;
+  }
+
+  .chart-container {
+    height: 240px;
+  }
+
+  .pie-chart-container {
+    height: 230px;
+  }
+}
+
+.transaction-filters input[type="month"],
+.transaction-filters input[type="date"] {
+  min-width: 145px;
+  min-height: 42px;
+  padding: 0 12px;
+  color: #334155;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 13px;
+  outline: none;
+}
+
+.transaction-filters input[type="month"]:focus,
+.transaction-filters input[type="date"]:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+}
+
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.pagination-button {
+  padding: 9px 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #374151;
+  font: inherit;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.pagination-button:hover:not(:disabled) {
+  background: #f3f4f6;
+}
+
+.pagination-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.pagination-info {
+  color: #4b5563;
+  font-size: 14px;
+}
+
+@media (max-width: 480px) {
+  .pagination {
+    gap: 8px;
+  }
+
+  .pagination-button {
+    padding: 8px 12px;
+  }
+}
+
