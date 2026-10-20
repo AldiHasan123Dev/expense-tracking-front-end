@@ -6,9 +6,11 @@ import type {
   SavingsMovementPayload,
 } from "../types/savingGoal"
 
+
 const API_URL = (
-  import.meta.env.VITE_API_URL || "http://localhost:3000"
-).replace(/\/$/, "")
+  import.meta.env.VITE_API_URL || "http://localhost:3001"
+).replace(/\/+$/, "")
+
 
 async function request<T>(
   path: string,
@@ -34,13 +36,13 @@ async function request<T>(
 }
 
 export function getSavingsGoals(): Promise<SavingsGoal[]> {
-  return request<SavingsGoal[]>("/api/savings-goals")
+  return request<SavingsGoal[]>("/savings-goals")
 }
 
 export function createSavingsGoal(
   payload: SavingsGoalPayload
 ): Promise<SavingsGoal> {
-  return request<SavingsGoal>("/api/savings-goals", {
+  return request<SavingsGoal>("/savings-goals", {
     method: "POST",
     body: JSON.stringify(payload),
   })
@@ -50,7 +52,7 @@ export function updateSavingsGoal(
   id: number,
   payload: SavingsGoalPayload
 ): Promise<{ message: string }> {
-  return request(`/api/savings-goals/${id}`, {
+  return request(`/savings-goals/${id}`, {
     method: "PUT",
     body: JSON.stringify(payload),
   })
@@ -59,7 +61,7 @@ export function updateSavingsGoal(
 export function deleteSavingsGoal(
   id: number
 ): Promise<{ message: string }> {
-  return request(`/api/savings-goals/${id}`, {
+  return request(`/savings-goals/${id}`, {
     method: "DELETE",
   })
 }
@@ -68,7 +70,7 @@ export function getSavingsMovements(
   goalId: number
 ): Promise<SavingsMovement[]> {
   return request<SavingsMovement[]>(
-    `/api/savings-goals/${goalId}/movements`
+    `/savings-goals/${goalId}/movements`
   )
 }
 
@@ -77,7 +79,7 @@ export function createSavingsMovement(
   payload: SavingsMovementPayload
 ): Promise<SavingsMovement> {
   return request<SavingsMovement>(
-    `/api/savings-goals/${goalId}/movements`,
+    `/savings-goals/${goalId}/movements`,
     {
       method: "POST",
       body: JSON.stringify(payload),

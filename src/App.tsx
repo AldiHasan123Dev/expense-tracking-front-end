@@ -283,6 +283,22 @@ function App() {
       maximumFractionDigits: 0,
     }).format(amount)
 
+    const refreshTransactions = async () => {
+  try {
+    const data = await getTransactions()
+
+    setTransactions(data)
+    setApiError("")
+    setCurrentPage(1)
+  } catch (error) {
+    setApiError(
+      error instanceof Error
+        ? error.message
+        : "Gagal memperbarui transaksi"
+    )
+  }
+}
+
   const formattedDate = new Intl.DateTimeFormat("id-ID", {
     day: "2-digit",
     month: "long",
@@ -752,7 +768,9 @@ function App() {
 
       {activePage === "savings" && (
         <section className="dashboard-savings-content">
-          <SavingsGoals />
+          <SavingsGoals
+  onTransactionChange={refreshTransactions}
+/>
         </section>
       )}
 

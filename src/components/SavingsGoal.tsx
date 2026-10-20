@@ -37,6 +37,10 @@ function today() {
   return `${year}-${month}-${day}`
 }
 
+interface SavingsGoalsProps {
+  onTransactionChange?: () => Promise<void> | void
+}
+
 const emptyForm = {
   name: "",
   target_amount: "",
@@ -44,7 +48,9 @@ const emptyForm = {
   description: "",
 }
 
-export default function SavingsGoals() {
+export default function SavingsGoals({
+  onTransactionChange,
+}: SavingsGoalsProps) {
   const [goals, setGoals] = useState<SavingsGoal[]>([])
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
@@ -155,7 +161,8 @@ export default function SavingsGoals() {
       setError("")
       setSuccess("")
 
-      await deleteSavingsGoal(goal.id)
+    await deleteSavingsGoal(goal.id)
+    await onTransactionChange?.()
 
       if (activeGoal?.id === goal.id) {
         setActiveGoal(null)
@@ -189,6 +196,7 @@ export default function SavingsGoals() {
     }
   }
 
+
   async function handleMovementSubmit(
     event: FormEvent<HTMLFormElement>
   ) {
@@ -215,6 +223,11 @@ export default function SavingsGoals() {
         movement_date: movementDate,
       })
 
+      // Perbarui transaksi jika melakukan setoran.
+      if (movementType === "deposit") {
+        await onTransactionChange?.()
+      }
+
       setMovementAmount("")
       setMovementNote("")
       setMovementDate(today())
@@ -237,6 +250,7 @@ export default function SavingsGoals() {
       setSaving(false)
     }
   }
+
 
   const totalTarget = goals.reduce(
     (sum, goal) => sum + goal.target_amount,
@@ -405,9 +419,8 @@ export default function SavingsGoals() {
                       </div>
 
                       <span
-                        className={`savings-status ${
-                          goal.is_completed ? "completed" : ""
-                        }`}
+                        className={`savings-status ${goal.is_completed ? "completed" : ""
+                          }`}
                       >
                         {goal.is_completed ? "Tercapai" : "Berjalan"}
                       </span>
@@ -433,9 +446,8 @@ export default function SavingsGoals() {
                       aria-valuenow={barWidth}
                     >
                       <div
-                        className={`savings-progress-fill ${
-                          goal.is_completed ? "completed" : ""
-                        }`}
+                        className={`savings-progress-fill ${goal.is_completed ? "completed" : ""
+                          }`}
                         style={{ width: `${barWidth}%` }}
                       />
                     </div>
