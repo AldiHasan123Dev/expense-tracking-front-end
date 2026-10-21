@@ -14,10 +14,13 @@ import TransactionForm from "./components/TransactionForm"
 import FinanceChart from "./components/FinanceChart"
 import BudgetManager from "./components/BudgetManager"
 import SavingsGoals from "./components/SavingsGoal"
+import AccountManager from "./components/AccountManager"
+import { getAccounts } from "./services/accountApi"
+import type { Account } from "./types/account"
 
 type TransactionFilter = "all" | "income" | "expense"
 type DateFilterType = "all" | "month" | "custom"
-type ActivePage = "dashboard" | "transactions" | "budget" | "savings"
+type ActivePage = "dashboard" | "transactions" | "budget" | "savings" | "accounts"
 
 const PAGE_SIZE = 10
 
@@ -44,6 +47,16 @@ function App() {
   const [currentPage, setCurrentPage] = useState(1)
 
   const [transactions, setTransactions] = useState<Transaction[]>([])
+  const [accounts, setAccounts] = useState<Account[]>([])
+  const [accountMonth, setAccountMonth] = useState(() => {
+    const today = new Date()
+
+    return `${today.getFullYear()}-${String(
+      today.getMonth() + 1
+    ).padStart(2, "0")}`
+  })
+  const [accountsLoading, setAccountsLoading] = useState(false)
+  const [accountsError, setAccountsError] = useState("")
   const [isLoading, setIsLoading] = useState(true)
   const [apiError, setApiError] = useState("")
   const [showSavingsGoals, setShowSavingsGoals] = useState(false)
@@ -112,6 +125,41 @@ function App() {
     }
 
     void loadTransactions()
+
+    return () => {
+      isActive = false
+    }
+  }, [])
+
+  useEffect(() => {
+    let isActive = true
+
+    async function loadAccounts() {
+      try {
+        setAccountsLoading(true)
+        setAccountsError("")
+
+        const data = await getAccounts()
+
+        if (isActive) {
+          setAccounts(data)
+        }
+      } catch (error) {
+        if (isActive) {
+          setAccountsError(
+            error instanceof Error
+              ? error.message
+              : "Gagal mengambil data rekening."
+          )
+        }
+      } finally {
+        if (isActive) {
+          setAccountsLoading(false)
+        }
+      }
+    }
+
+    void loadAccounts()
 
     return () => {
       isActive = false
@@ -283,21 +331,21 @@ function App() {
       maximumFractionDigits: 0,
     }).format(amount)
 
-    const refreshTransactions = async () => {
-  try {
-    const data = await getTransactions()
+  const refreshTransactions = async () => {
+    try {
+      const data = await getTransactions()
 
-    setTransactions(data)
-    setApiError("")
-    setCurrentPage(1)
-  } catch (error) {
-    setApiError(
-      error instanceof Error
-        ? error.message
-        : "Gagal memperbarui transaksi"
-    )
+      setTransactions(data)
+      setApiError("")
+      setCurrentPage(1)
+    } catch (error) {
+      setApiError(
+        error instanceof Error
+          ? error.message
+          : "Gagal memperbarui transaksi"
+      )
+    }
   }
-}
 
   const formattedDate = new Intl.DateTimeFormat("id-ID", {
     day: "2-digit",
@@ -305,6 +353,83 @@ function App() {
     year: "numeric",
   }).format(new Date())
 
+  const accountColors = [
+    {
+      background: "#E0F2FE",
+      border: "#7DD3FC",
+      text: "#075985",
+      icon: "#0284C7",
+    },
+    {
+      background: "#DCFCE7",
+      border: "#86EFAC",
+      text: "#166534",
+      icon: "#16A34A",
+    },
+    {
+      background: "#F3E8FF",
+      border: "#D8B4FE",
+      text: "#6B21A8",
+      icon: "#9333EA",
+    },
+    {
+      background: "#FEF3C7",
+      border: "#FDE68A",
+      text: "#92400E",
+      icon: "#D97706",
+    },
+    {
+      background: "#FCE7F3",
+      border: "#F9A8D4",
+      text: "#9D174D",
+      icon: "#DB2777",
+    },
+    {
+      background: "#CCFBF1",
+      border: "#5EEAD4",
+      text: "#115E59",
+      icon: "#0D9488",
+    },
+  ]
+
+  const accountBalances = accounts.map((account, index) => {
+    // Saldo dihitung sampai akhir bulan yang dipilih.
+    // Format tanggal transaksi diasumsikan YYYY-MM-DD.
+    const cutoffDate = `${accountMonth}-31`
+
+    const accountTransactions = transactions.filter((transaction) => {
+      const transactionAccountId = transaction.account_id
+
+      return (
+        Number(transactionAccountId) === Number(account.id) &&
+        transactionAccountId != null &&
+        transaction.date <= cutoffDate
+      )
+    })
+
+    const balance = accountTransactions.reduce((total, transaction) => {
+      if (transaction.type === "income") {
+        return total + Number(transaction.amount)
+      }
+
+      if (transaction.type === "expense") {
+        return total - Number(transaction.amount)
+      }
+
+      return total
+    }, 0)
+
+    return {
+      ...account,
+      calculatedBalance: balance,
+      color: accountColors[index % accountColors.length],
+    }
+  })
+
+  const totalAccountBalance = accountBalances.reduce(
+    (total, account) => total + account.calculatedBalance,
+    0
+  )
   return (
     <main className={`dashboard page-${activePage}`}>
       {/* HEADER */}
@@ -364,6 +489,16 @@ function App() {
           >
             <span className="sidebar-icon">◇</span>
             <span>Target Tabungan</span>
+          </button>
+
+          <button
+            type="button"
+            className={`sidebar-link ${activePage === "accounts" ? "active" : ""
+              }`}
+            onClick={() => setActivePage("accounts")}
+          >
+            <span className="sidebar-icon">▤</span>
+            <span>Saldo</span>
           </button>
         </nav>
 
@@ -471,6 +606,113 @@ function App() {
       )}
 
       {activePage === "dashboard" && (
+        <section className="dashboard-account-balances">
+          <div className="account-balances-header">
+            <div>
+              <h2>Saldo per Rekening</h2>
+              <p>
+                Pantau saldo setiap dompet, e-wallet, dan rekening bank.
+              </p>
+            </div>
+
+            <div className="account-month-filter">
+              <label htmlFor="account-month">
+                Filter bulan
+              </label>
+
+              <input
+                id="account-month"
+                type="month"
+                value={accountMonth}
+                onChange={(event) =>
+                  setAccountMonth(event.target.value)
+                }
+              />
+            </div>
+          </div>
+
+          {accountsError && (
+            <div className="error-message" role="alert">
+              {accountsError}
+            </div>
+          )}
+
+          {accountsLoading ? (
+            <div className="account-balances-empty">
+              Memuat saldo rekening...
+            </div>
+          ) : accounts.length === 0 ? (
+            <div className="account-balances-empty">
+              <span>👛</span>
+              <h3>Belum ada rekening</h3>
+              <p>
+                Tambahkan rekening melalui menu Saldo untuk mulai
+                memantau saldo di Dashboard.
+              </p>
+            </div>
+          ) : (
+            <>
+              <div className="account-balances-total">
+                <div>
+                  <span>Total Saldo</span>
+                  <h3>{formatRupiah(totalAccountBalance)}</h3>
+                </div>
+
+                <span className="account-total-icon">Rp</span>
+              </div>
+
+              <div className="account-balances-grid">
+                {accountBalances.map((account) => (
+                  <article
+                    className="account-balance-card"
+                    key={account.id}
+                    style={{
+                      backgroundColor: account.color.background,
+                      borderColor: account.color.border,
+                      color: account.color.text,
+                    }}
+                  >
+                    <div className="account-balance-card-top">
+                      <span
+                        className="account-balance-icon"
+                        style={{
+                          color: account.color.icon,
+                        }}
+                      >
+                        {account.type === "cash"
+                          ? "👛"
+                          : account.type === "ewallet"
+                            ? "📱"
+                            : "🏦"}
+                      </span>
+
+                      <span className="account-balance-type">
+                        {account.type === "cash"
+                          ? "Dompet"
+                          : account.type === "ewallet"
+                            ? "E-Wallet"
+                            : "Bank"}
+                      </span>
+                    </div>
+
+                    <h3>{account.name}</h3>
+
+                    <p className="account-balance-label">
+                      Saldo per {accountMonth}
+                    </p>
+
+                    <strong className="account-balance-amount">
+                      {formatRupiah(account.calculatedBalance)}
+                    </strong>
+                  </article>
+                ))}
+              </div>
+            </>
+          )}
+        </section>
+      )}
+
+      {activePage === "dashboard" && (
         <section className="dashboard-chart">
           <div className="chart-filter-header">
             <div>
@@ -562,19 +804,25 @@ function App() {
       )}
 
       {/* ANGGARAN BULANAN */}
-     {activePage === "dashboard" && (
-  <BudgetManager
-    transactions={transactions}
-    mode="summary"
-  />
-)}
+      {activePage === "dashboard" && (
+        <BudgetManager
+          transactions={transactions}
+          mode="summary"
+        />
+      )}
 
-{activePage === "budget" && (
-  <BudgetManager
-    transactions={transactions}
-    mode="full"
-  />
-)}
+      {activePage === "budget" && (
+        <BudgetManager
+          transactions={transactions}
+          mode="full"
+        />
+      )}
+
+      {activePage === "accounts" && (
+        <section className="dashboard-accounts">
+          <AccountManager />
+        </section>
+      )}
       {/* FORM TRANSAKSI */}
       {activePage === "transactions" && (
         <>
@@ -769,8 +1017,8 @@ function App() {
       {activePage === "savings" && (
         <section className="dashboard-savings-content">
           <SavingsGoals
-  onTransactionChange={refreshTransactions}
-/>
+            onTransactionChange={refreshTransactions}
+          />
         </section>
       )}
 

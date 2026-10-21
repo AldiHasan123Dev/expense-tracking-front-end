@@ -71,7 +71,7 @@ function TransactionItem({
   </strong>
 
   {/* Tombol Edit dan Hapus */}
-  <div className="transaction-actions">
+  {/* <div className="transaction-actions">
     <button
       type="button"
       className="edit-transaction-button"
@@ -87,7 +87,7 @@ function TransactionItem({
     >
       🗑 Hapus
     </button>
-  </div>
+  </div> */}
 </div>
 
     </article>

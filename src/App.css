@@ -1205,3 +1205,260 @@ textarea:focus-visible {
     width: 100%;
   }
 }
+
+.account-balance-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.account-balance-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px 14px;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    background: #ffffff;
+}
+
+.account-balance-item strong {
+    overflow-wrap: anywhere;
+}
+
+.account-balance-item > strong {
+    text-align: right;
+    white-space: nowrap;
+}
+
+.account-balance-item .form-hint {
+    margin: 4px 0 0;
+    font-size: 12px;
+}
+
+/* ================= SALDO PER REKENING DI DASHBOARD ================= */
+
+.dashboard-account-balances {
+  min-width: 0;
+  padding: 22px;
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.account-balances-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.account-balances-header h2 {
+  margin: 0 0 6px;
+  color: var(--text);
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.account-balances-header p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.account-month-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 180px;
+}
+
+.account-month-filter label {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.account-month-filter input {
+  min-height: 40px;
+  padding: 9px 12px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: #fff;
+  color: var(--text);
+  font: inherit;
+}
+
+.account-balances-total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 16px;
+  padding: 18px 20px;
+  border: 1px solid #dfe3ff;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #f5f5ff, #fff);
+}
+
+.account-balances-total span {
+  color: #687386;
+  font-size: 12px;
+}
+
+.account-balances-total h3 {
+  margin: 7px 0 0;
+  color: #4338ca;
+  font-size: clamp(22px, 3vw, 29px);
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.account-total-icon {
+  display: grid;
+  width: 45px;
+  height: 45px;
+  flex-shrink: 0;
+  place-items: center;
+  border-radius: 12px;
+  background: #e0e7ff;
+  color: #4338ca !important;
+  font-size: 14px !important;
+  font-weight: 800;
+}
+
+.account-balances-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.account-balance-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 160px;
+  padding: 17px;
+  border: 1px solid;
+  border-radius: 13px;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.account-balance-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgb(15 23 42 / 7%);
+}
+
+.account-balance-card-top {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.account-balance-icon {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  place-items: center;
+  border-radius: 10px;
+  background: rgb(255 255 255 / 65%);
+  font-size: 18px;
+}
+
+.account-balance-type {
+  font-size: 11px;
+  font-weight: 700;
+  opacity: 0.8;
+}
+
+.account-balance-card h3 {
+  margin: 15px 0 5px;
+  font-size: 15px;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.account-balance-label {
+  margin: 0 0 6px;
+  font-size: 11px;
+  opacity: 0.75;
+}
+
+.account-balance-amount {
+  margin-top: auto;
+  font-size: clamp(17px, 1.8vw, 22px);
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.account-balances-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 150px;
+  padding: 22px;
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+  color: var(--muted);
+  text-align: center;
+  font-size: 13px;
+}
+
+.account-balances-empty > span {
+  margin-bottom: 8px;
+  font-size: 28px;
+}
+
+.account-balances-empty h3 {
+  margin: 0 0 6px;
+  color: var(--text);
+  font-size: 15px;
+}
+
+.account-balances-empty p {
+  max-width: 380px;
+  margin: 0;
+  line-height: 1.6;
+}
+
+@media (max-width: 1050px) {
+  .account-balances-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 650px) {
+  .dashboard-account-balances {
+    padding: 15px;
+  }
+
+  .account-balances-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .account-month-filter {
+    width: 100%;
+  }
+
+  .account-month-filter input {
+    width: 100%;
+  }
+
+  .account-balances-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .account-balance-card {
+    min-height: 140px;
+  }
+}
