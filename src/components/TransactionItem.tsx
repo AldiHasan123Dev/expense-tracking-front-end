@@ -53,43 +53,45 @@ function TransactionItem({
             <span className="meta-icon">▦</span>
             {formatDate(transaction.date)}
           </span>
+
+          <span className="transaction-account">
+            <span className="meta-icon">▣</span>
+            {transaction.account_name || "Account tidak diketahui"}
+          </span>
         </div>
       </div>
 
+      <div className="transaction-info">
+        <span
+          className={`transaction-badge ${
+            isIncome ? "badge-income" : "badge-expense"
+          }`}
+        >
+          {isIncome ? "Pemasukan" : "Pengeluaran"}
+        </span>
 
-<div className="transaction-info">
-  <span
-    className={`transaction-badge ${
-      isIncome ? "badge-income" : "badge-expense"
-    }`}
-  >
-    {isIncome ? "Pemasukan" : "Pengeluaran"}
-  </span>
+        <strong className="transaction-amount">
+          {isIncome ? "+" : "−"} {formatRupiah(transaction.amount)}
+        </strong>
 
-  <strong className="transaction-amount">
-    {isIncome ? "+" : "−"} {formatRupiah(transaction.amount)}
-  </strong>
+        <div className="transaction-actions">
+          <button
+            type="button"
+            className="edit-transaction-button"
+            onClick={() => onEdit(transaction)}
+          >
+            ✎ Edit
+          </button>
 
-  {/* Tombol Edit dan Hapus */}
-  {/* <div className="transaction-actions">
-    <button
-      type="button"
-      className="edit-transaction-button"
-      onClick={() => onEdit(transaction)}
-    >
-      ✎ Edit
-    </button>
-
-    <button
-      type="button"
-      className="delete-transaction-button"
-      onClick={() => onDelete(transaction.id)}
-    >
-      🗑 Hapus
-    </button>
-  </div> */}
-</div>
-
+          <button
+            type="button"
+            className="delete-transaction-button"
+            onClick={() => onDelete(transaction.id)}
+          >
+            🗑 Hapus
+          </button>
+        </div>
+      </div>
     </article>
   )
 }

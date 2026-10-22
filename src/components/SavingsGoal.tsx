@@ -9,7 +9,8 @@ import type {
   SavingsGoalPayload,
   SavingsMovement,
 } from "../types/savingGoal"
-
+import { getAccounts } from "../services/accountApi"
+import type { Account } from "../types/account"
 import {
   getSavingsGoals,
   createSavingsGoal,
@@ -52,6 +53,9 @@ export default function SavingsGoals({
   onTransactionChange,
 }: SavingsGoalsProps) {
   const [goals, setGoals] = useState<SavingsGoal[]>([])
+  const [accounts, setAccounts] = useState<Account[]>([])
+  const [selectedAccountId, setSelectedAccountId] = useState("")
+  const [loadingAccounts, setLoadingAccounts] = useState(false)
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState("")
@@ -69,6 +73,49 @@ export default function SavingsGoals({
   const [movementNote, setMovementNote] = useState("")
   const [movementDate, setMovementDate] = useState(today())
 
+  useEffect(() => {
+    let cancelled = false
+
+    async function loadAccounts() {
+      try {
+        setLoadingAccounts(true)
+
+        const data = await getAccounts()
+
+        if (!cancelled) {
+          setAccounts(data)
+
+          if (data.length > 0) {
+            setSelectedAccountId((current) =>
+              current && data.some(
+                (account) => String(account.id) === current
+              )
+                ? current
+                : String(data[0].id)
+            )
+          }
+        }
+      } catch (err) {
+        if (!cancelled) {
+          setError(
+            err instanceof Error
+              ? err.message
+              : "Gagal mengambil data rekening."
+          )
+        }
+      } finally {
+        if (!cancelled) {
+          setLoadingAccounts(false)
+        }
+      }
+    }
+
+    void loadAccounts()
+
+    return () => {
+      cancelled = true
+    }
+  }, [])
   const loadGoals = useCallback(async () => {
     try {
       setError("")
@@ -161,8 +208,8 @@ export default function SavingsGoals({
       setError("")
       setSuccess("")
 
-    await deleteSavingsGoal(goal.id)
-    await onTransactionChange?.()
+      await deleteSavingsGoal(goal.id)
+      await onTransactionChange?.()
 
       if (activeGoal?.id === goal.id) {
         setActiveGoal(null)
@@ -211,17 +258,40 @@ export default function SavingsGoals({
       return
     }
 
+    if (!selectedAccountId) {
+      setError("Pilih rekening terlebih dahulu.")
+      return
+    }
+
+    const selectedAccount = accounts.find(
+      (account) => String(account.id) === selectedAccountId
+    )
+
+    if (!selectedAccount) {
+      setError("Rekening yang dipilih tidak ditemukan.")
+      return
+    }
+
+    if (
+      movementType === "deposit" &&
+      amount > Number(selectedAccount.balance)
+    ) {
+      setError("Saldo rekening tidak mencukupi untuk setoran ini.")
+      return
+    }
+
     try {
       setError("")
       setSuccess("")
       setSaving(true)
 
-      await createSavingsMovement(activeGoal.id, {
-        type: movementType,
-        amount,
-        note: movementNote.trim() || null,
-        movement_date: movementDate,
-      })
+await createSavingsMovement(activeGoal.id, {
+  type: movementType,
+  amount,
+  note: movementNote.trim() || null,
+  movement_date: movementDate,
+  account_id: Number(selectedAccountId),
+})
 
       // Perbarui transaksi jika melakukan setoran.
       if (movementType === "deposit") {
@@ -526,6 +596,31 @@ export default function SavingsGoals({
               >
                 <option value="deposit">Setoran</option>
                 <option value="withdrawal">Penarikan</option>
+              </select>
+            </label>
+
+            <label>
+              Rekening sumber
+              <select
+                value={selectedAccountId}
+                onChange={(event) =>
+                  setSelectedAccountId(event.target.value)
+                }
+                disabled={loadingAccounts || accounts.length === 0}
+                required
+              >
+                <option value="">
+                  {loadingAccounts
+                    ? "Memuat rekening..."
+                    : "Pilih rekening"}
+                </option>
+
+                {accounts.map((account) => (
+                  <option key={account.id} value={String(account.id)}>
+                    {account.name} — Saldo{" "}
+                    {rupiah(Number(account.balance) || 0)}
+                  </option>
+                ))}
               </select>
             </label>
 

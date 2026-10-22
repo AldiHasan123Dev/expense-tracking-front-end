@@ -32,4 +32,5 @@ export interface SavingsMovementPayload {
   amount: number
   note: string | null
   movement_date: string
+ account_id: number | null;
 }

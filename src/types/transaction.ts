@@ -4,6 +4,7 @@ export interface Transaction {
   amount: number
   type: "income" | "expense"
   category: string
-  account_id: number
   date: string
+  account_id: number
+  account_name?: string
 }

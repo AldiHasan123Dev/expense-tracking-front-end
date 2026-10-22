@@ -1462,3 +1462,246 @@ textarea:focus-visible {
     min-height: 140px;
   }
 }
+
+/* Ringkasan pemasukan dan pengeluaran semua rekening */
+.account-month-summary {
+  margin: 24px 0;
+  padding: 24px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+}
+
+.account-month-summary-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.account-month-summary-header h2 {
+  margin: 0 0 8px;
+  color: #111827;
+  font-size: 20px;
+}
+
+.account-month-summary-header p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.account-month-summary-period {
+  padding: 8px 12px;
+  color: #374151;
+  background: #f3f4f6;
+  border-radius: 8px;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.account-month-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.account-month-summary-card {
+  min-width: 0;
+  padding: 22px;
+  border: 1px solid;
+  border-radius: 14px;
+}
+
+.account-month-summary-card.income {
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+}
+
+.account-month-summary-card.expense {
+  background: #fff1f2;
+  border-color: #fecdd3;
+}
+
+.account-month-summary-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  margin-bottom: 16px;
+  border-radius: 11px;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.account-month-summary-card.income .account-month-summary-icon {
+  color: #15803d;
+  background: #dcfce7;
+}
+
+.account-month-summary-card.expense .account-month-summary-icon {
+  color: #be123c;
+  background: #ffe4e6;
+}
+
+.account-month-summary-card > span {
+  color: #4b5563;
+  font-size: 14px;
+}
+
+.account-month-summary-card h3 {
+  margin: 10px 0;
+  color: #111827;
+  font-size: clamp(20px, 2.2vw, 28px);
+  overflow-wrap: anywhere;
+}
+
+.account-month-summary-card p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 12px;
+}
+
+/* Diagram garis pengeluaran per rekening */
+.dashboard-account-expense-chart {
+  margin: 24px 0;
+  padding: 24px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+}
+
+.account-expense-chart-heading {
+  margin-bottom: 20px;
+}
+
+.account-expense-chart-heading h3 {
+  margin: 0 0 8px;
+  color: #111827;
+  font-size: 20px;
+}
+
+.account-expense-chart-heading p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.account-expense-svg-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.account-expense-svg {
+  display: block;
+  width: 100%;
+  min-width: 620px;
+  height: auto;
+}
+
+.account-expense-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  margin-top: 18px;
+}
+
+.account-expense-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #374151;
+  font-size: 13px;
+}
+
+.account-expense-legend-dot {
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+  border-radius: 50%;
+}
+
+.account-expense-empty {
+  padding: 30px 16px;
+  color: #6b7280;
+  background: #f9fafb;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 14px;
+}
+
+@media (max-width: 640px) {
+  .account-month-summary,
+  .dashboard-account-expense-chart {
+    padding: 16px;
+  }
+
+  .account-month-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .account-month-summary-header {
+    flex-direction: column;
+  }
+
+  .account-month-summary-card {
+    padding: 18px;
+  }
+}
+
+.account-expense-chart-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.account-expense-month-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 160px;
+}
+
+.account-expense-month-filter label {
+  color: #4b5563;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.account-expense-month-filter input {
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #111827;
+  font: inherit;
+}
+
+@media (max-width: 640px) {
+  .account-expense-chart-heading {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .account-expense-month-filter {
+    width: 100%;
+  }
+}
+.transaction-account {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #6366f1;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.transaction-account .meta-icon {
+  color: #6366f1;
+}
